@@ -15,7 +15,7 @@ public class ArrayListTests {
         }
         Random randomGenerator = new Random();
         randomGenerator.ints(10, 10, 30).forEach(i -> System.out.println(i));
-        
+
 
     }
 
