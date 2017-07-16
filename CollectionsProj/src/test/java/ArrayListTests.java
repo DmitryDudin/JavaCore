@@ -22,6 +22,9 @@ public class ArrayListTests {
     @Test
     public void testAddPerformance() {
 
-
+        System.out.println();
     }
 }
+
+
+//  https://habrahabr.ru/post/237043/
