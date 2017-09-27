@@ -1,9 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -86,5 +84,80 @@ public class UserStreamTests {
 //        intermediate operation - т е она не терминальная, а промежуточная
     }
 
-//    35min
+//    .skip(number)  -  пропуск элементов в начале стрима;  stateful intermediate operation
+
+    @Test
+    public void sortTest() {
+//        есть два вида с Comparator и без(обьект должен реализовывать Comparable)
+//        если обьект реализовывает Comparable - тогда можно без параметров sort()
+        List<User> testCollection = Arrays.asList(new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.USER),
+                new User(3l, "Bill", User.UserrRole.USER),
+                new User(3l, "Bill", User.UserrRole.USER),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.USER));
+
+        List<User> result = testCollection.stream()
+//                .sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))
+                .sorted(Comparator.comparing(User::getName))
+                .collect(toList());
+        System.out.println(result);
+    }
+
+    @Test
+    public void intermediateAndTerminalOperationsTest() {
+        List<String> phases = new LinkedList<>();
+        Collection<Integer> users = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        List<Integer> names = users.stream()
+//        List<Integer> names = users.parallelStream()//порядок выполнения и количество stateless операций непредсказуемо
+                .filter(n -> {
+                    phases.add("f-" + n);
+                    return n % 2 == 0;
+                })
+                .map(n -> {// сюда попадаем сразу после того как прошли filter
+                    phases.add("m-" + n);
+                    return n;
+                })
+//                .sorted((n1, n2) -> {//для этой операции нужны все значения (stateful operation)- своего рода накопитель перед sorted, limit - тут не работает
+//                    phases.add("s-" + n1 + "-" + n2);
+//                    return Integer.compare(n2, n1);
+//                })
+//                некоторые операции влияют на выполнение других
+                .limit(2) // надо закоментить sorted
+                //только терминальная операция приводит к вычислению
+                .collect(toList());
+
+        System.out.println(names + "/n");
+        System.out.println(phases);
+    }
+
+    //stateful operation - требуют всез данных
+
+    @Test
+    public void peekTest() {
+//        Stream<T> peek(Consumer<? super T> action);
+
+        List<User> sorted = new LinkedList<>();
+        List<User> users = Arrays.asList(new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.USER),
+                new User(3l, "Bill", User.UserrRole.USER),
+//                new User(3l, "Bill", User.UserrRole.USER),
+                new User(4l, "Den", User.UserrRole.USER),
+//                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.USER));
+
+        List<String> names = users.stream()
+                .sorted(Comparator.comparing(User::getId).reversed())
+                .peek(user -> sorted.add(user))//todo need  understand
+                .map(User::getName)
+                .collect(toList());
+
+        System.out.println(names);
+        System.out.println(sorted);
+
+    }
+//    54min
+
 }
