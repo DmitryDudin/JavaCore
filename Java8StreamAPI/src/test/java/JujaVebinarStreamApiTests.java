@@ -1,14 +1,19 @@
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
-public class UserStreamTests {
+public class JujaVebinarStreamApiTests {
 //    .steam  -  default method в интерфейсе Collection
 
 //промежуточные операции ничего не делают - они лишь формируют query
@@ -344,6 +349,206 @@ public class UserStreamTests {
         System.out.println(names);
     }
 
-//1h50min
+
+    @Test
+    public void collectToCollectionTest() {
+//supplier - порождает контейнер в который будут накапливаться данные
+
+        List<User> users = Arrays.asList(
+                new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.USER),
+                new User(3l, "Bill", User.UserrRole.USER),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.USER));
+
+        ArrayList<String> names = users.stream()
+                .unordered()
+                .map(user -> user.getName())
+                .collect(Collectors.toCollection(ArrayList::new));
+        System.out.println(names);
+
+
+        String joinString = users.stream()
+                .unordered()
+                .map(user -> user.getName())
+                .collect(Collectors.joining("---"));//конкатенируем элементы в строку
+        System.out.println("joinString= " + joinString);
+
+        Long count = users.stream()
+                .unordered()
+                .map(user -> user.getName())
+                .collect(Collectors.counting());
+        System.out.println("count= " + count);
+
+        Set<String> setNames = users.stream()
+                .unordered()
+                .collect(Collectors.mapping(User::getName, toSet()));
+        System.out.println("setNames= " + setNames);
+
+        LinkedHashSet<String> collect = users.stream()
+                .unordered()
+                .collect(Collectors.collectingAndThen(toList(),  // todo not understand
+                        (userList) -> new LinkedHashSet<String>() {{//finisher
+                            userList.get(1);
+                        }}
+                        )
+                );
+        System.out.println("collect = " + collect);
+
+
+//        Collectors.maxBy()
+//        Collectors.minBy()
+
+//        return sum:
+//        Collectors.summingInt()
+//        Collectors.summingLong()
+//        Collectors.summingDouble()
+
+        //average
+//        Collectors.averagingInt()
+//        Collectors.averagingLong()
+//        Collectors.averagingDouble()
+
+        //reduce обьединяет стрим в один обьект (T identity)
+//        public static <T> Collector<T, ?, T> reducing(T identity, BinaryOperator<T> op)
+//        public static <T> Collector<T, ?, Optional<T>> reducing(BinaryOperator<T> op)
+//        public static <T, U> Collector<T, ?, U> reducing(U identity, Function<? super T, ? extends U> mapper, BinaryOperator<U> op) {
+
+//        groupingBy() разьединяет коллекцию на несколько частей в возвращает Map
+//        Collectors.groupingBy()
+
+//        partitioningBy - разделяет коллекцию на две части по соответствию условию и возвращает их как Map<Boolean, List>
+//        Collectors.partitioningBy()
+
+//        Collectors.summarizingInt()
+//        Collectors.summarizingDouble()
+//        Collectors.summarizingLong()
+    }
+
+    @Test
+    public void reduceTest() {
+//        reduce() - преобразует весь поток к одному обьекту
+        List<User> users = Arrays.asList(
+                new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.USER),
+                new User(3l, "Bill", User.UserrRole.USER),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.USER));
+
+
+        Optional<Long> sum = users.stream()
+                .map(User::getId)
+                .reduce((a, b) -> a + b);
+//                .reduce(Long::sum);
+        System.out.println("sum= " + sum.get());
+
+        Long sumWithIdentity = users.stream()
+                .map(User::getId)
+                .reduce(300L, //identity -   с чего начать вычисления
+                        (a, b) -> a + b);//accumulator
+        System.out.println("sumWithIdentity= " + sumWithIdentity);
+
+        StringBuilder strBuilder = users.stream()
+                .reduce(
+                        new StringBuilder(),//identity  контейнер
+                        (builder, user) -> builder.append(user.toString()),//accumulator как в контейнер добавлять единичные значения
+                        (builder, anotherBuilder) -> builder.append(anotherBuilder.toString())//combiner  как в контейнер добавлять другой контейнер если вычисления распараллелились
+                );
+        System.out.println(strBuilder.toString());
+    }
+
+    @Test
+    public void minTest() {
+//        поиск минимального значения с помощью компаратора
+        List<User> users = Arrays.asList(
+                new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.GUEST),
+                new User(3l, "Bill", User.UserrRole.ADMIN),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.GUEST),
+                new User(5l, "Alya", User.UserrRole.ADMIN));
+
+        Optional<User> minUser = users.stream()
+                .min(
+                        Comparator
+                                .comparing(User::getRole)
+                                .thenComparing(User::getName)
+                );
+        System.out.println("minUser= " + minUser);
+//max - аналогично
+    }
+
+    @Test
+    public void anyMatchTest() {
+        //есть ли совпадение хотя бы по одному элементу, если хотя бы для одного элемента Predicate возвращает true
+        // Predicate - такая функция которая на вход принимает значение(обьект), а возвращает boolean
+        List<User> users = Arrays.asList(
+                new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.GUEST),
+                new User(3l, "Bill", User.UserrRole.ADMIN),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.GUEST),
+                new User(5l, "Alya", User.UserrRole.ADMIN));
+
+        boolean anyMatch = users.stream()
+                .anyMatch(user -> user.getName() == "Alya");
+        System.out.println(anyMatch);
+        anyMatch = users.stream()
+                .anyMatch(user -> user.getName() == "Tim");
+        System.out.println(anyMatch);
+
+        // allMatch - true когда на все обьекты Predicate возвращает true
+        // noneMatch - true когда на все обьекты Predicate возвращает false
+    }
+
+
+//    todo --------------- Фабрики Стримов  --------------- //
+
+//    Stream.empty()  - пустой стрим
+//    Stream.of()  - стрим из n или одного элемента
+
+    @Test
+    public void streamFactories() {
+
+        User[] usersArray = {
+                new User(1l, "Nika", User.UserrRole.USER),
+                new User(2l, "Mike", User.UserrRole.GUEST),
+                new User(3l, "Bill", User.UserrRole.ADMIN),
+                new User(4l, "Den", User.UserrRole.USER),
+                new User(5l, "Olya", User.UserrRole.GUEST),
+                new User(5l, "Alya", User.UserrRole.ADMIN)
+        };
+        Arrays.stream(usersArray); // stream из массива
+
+        //безконечные стримы
+
+        int seed = 0;
+        List<Integer> iterateStream = Stream.iterate(seed, n -> n + 1)
+                .limit(10)
+                .collect(toList());
+        System.out.println("iterateStream= " + iterateStream);
+
+//        Stream.generate()
+
+//        Stream.concat(stream1, stream2) - обьединяет стримы
+    }
+
+//    todo --------------------- Parallel Stream ------------------------
+//Stream.parallelStream()
+//    .parallel()
+//    .sequential()
+//    streamObj.isParallel() - return boolean
+
+//   todo --------------------- Other Stream Features------------------------
+
+    @Test
+    public void featuresTest() throws IOException {
+//        Stream<String> lines = Files.lines(Paths.get("/file/path"));
+        IntStream chars = "Hello".chars();
+        IntStream codePoints = "Hello".codePoints();
+        System.out.println("chars= " + Arrays.toString(chars.toArray()));
+        System.out.println("codePoints=" + Arrays.toString(codePoints.toArray()));
+    }
+
 
 }
