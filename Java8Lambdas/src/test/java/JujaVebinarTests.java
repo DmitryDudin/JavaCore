@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
+import java.util.function.IntBinaryOperator;
 
 import static org.junit.Assert.assertEquals;
 
@@ -226,6 +230,31 @@ public class JujaVebinarTests {
 
     }
 
+    static class ButtonJava8 {
+        private Consumer<ActionEvent> onClick;
+
+        public void setOnClick(Consumer<ActionEvent> onClick) {
+            this.onClick = onClick;
+        }
+
+        public void click() {
+            if (onClick != null) {
+                onClick.accept(new ActionEvent("click with consumer"));
+            }
+        }
+    }
+
+    @Test
+    public void lambdasWithFuncInterfaceTest() {
+        ButtonJava8 buttonJava8 = new ButtonJava8();
+        buttonJava8.setOnClick(event -> {
+            testString = "on-" + event.getName();// реализация метода функционального интерфейса
+            System.out.println(testString);
+        });
+        buttonJava8.click();
+        assertEquals("on-click with consumer", testString);
+    }
+
     //todo ---------------------------------Theory---------------------------------------------------------
 //    приведение лямбды к определённому типу функционального интерфейса произойдёт автоматически
 //    а тип этого интерфейса будет взят из контекста
@@ -236,5 +265,71 @@ public class JujaVebinarTests {
 //        Object o = (ActionEvent event) -> System.out.println(testString);// ERROR Target type of a lambda conversion must be an interface.
     }
 
-//    40min
+    //todo ---------------------------------Functional Interfaces---------------------------------------------------------
+
+//    как правило лямбду передают в качестве параметра
+
+
+//    interface Consumer<T>  - потребитель
+//           void accept(T t);
+
+//    interface Runnable
+//    public abstract void run();
+
+
+    @Test
+    public void runnableFuncInterfaceTest() {
+        Runnable functor = () -> {
+            for (int i = 0; i < 100; i++) {
+                System.out.println("Second THREAD " + i);
+            }
+        };
+        new Thread(functor).start();
+        for (int i = 0; i < 100; i++) {
+            System.out.println("Main THREAD " + i);
+        }
+    }
+
+//    interface IntBinaryOperator
+//    int applyAsInt(int left, int right);
+
+    @Test
+    public void intBinaryOperatorTest() {
+        IntBinaryOperator intBinaryOperator = (int from, int to) -> {
+            int result = 0;
+            for (int i = from; i <= to; i++) {
+                result += i;
+            }
+            return result;
+        };
+        int applyAsInt = intBinaryOperator.applyAsInt(0, 10);
+        assertEquals(55, applyAsInt);
+    }
+
+//    interface BiConsumer<T, U>
+//    void accept(T t, U u);
+
+    @Test
+    public void biconsumerTest() {
+        BiConsumer functor = (first, second) -> {
+            //ww incoming parameters
+            System.out.println(first + "  " + second);
+        };
+        functor.accept("Good day", new ActionEvent("click"));
+    }
+
+//    interface BiFunction<T, U, R>
+//        R apply(T t, U u);
+
+    @Test
+    public void bifunctionTest() {
+        BiFunction functor = (x, y) -> {
+            return x + " " + y;
+        };
+        Object result = functor.apply("Good", "Day");
+        System.out.println(result);
+    }
+
+
+    //1h20min
 }
