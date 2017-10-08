@@ -536,10 +536,11 @@ public class JujaVebinarTests {
 
 
     //todo --------Theory------------
-//есть три варианта:
-//    object::instanceMethod
-//    Class::staticMethod
-//    Class::instanceMethod
+//есть четыре варианта:
+//    -  object::instanceMethod
+//    -  Class::staticMethod
+//    -  Class::instanceMethod
+//    -  Class::new  - ссылка на конструктор
 //    В первых двух случаях ссылка на метод эквивалентна лямбда выражения, которое предоставляет параметры метода
 //    System.out::println   эквивалентно (x)->System.out.println(x)
 //    Math::pow  эквивалентно (x,y)->Math.pow(x,y)
