@@ -1,1 +1,12 @@
 http://tutorials.jenkov.com/java-io/index.html
+
+IOUtils
+
+https://habrahabr.ru/company/luxoft/blog/278233/
+
+
+issues:
+1. copy file
+2. read file from disk
+3. write file on disk
+4.

@@ -1,3 +1,5 @@
+package CollectionsAPI.Iterable.Collection.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -28,3 +30,4 @@ public class ArrayListTests {
 
 
 //  https://habrahabr.ru/post/237043/
+//https://habrahabr.ru/company/luxoft/blog/256877/

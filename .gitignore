@@ -21,3 +21,5 @@ hs_err_pid*
 out
 gen
 *.gradle/
+!/JavaIO/build/
+!/Java8Lambdas/build/
