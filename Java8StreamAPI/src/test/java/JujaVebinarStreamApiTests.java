@@ -502,7 +502,7 @@ public class JujaVebinarStreamApiTests {
     }
 
 
-//    todo --------------- Фабрики Стримов  --------------- //
+//    todo --------------- Stream Factories  --------------- //
 
 //    Stream.empty()  - пустой стрим
 //    Stream.of()  - стрим из n или одного элемента
