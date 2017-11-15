@@ -18,6 +18,8 @@ public class ArrayListTests {
         Random randomGenerator = new Random();
         randomGenerator.ints(10, 10, 30).forEach(i -> System.out.println(i));
 
+        int[] arr = new int[]{0, 9, 9};
+        int[] arr1 = new int[1];
 
     }
 
