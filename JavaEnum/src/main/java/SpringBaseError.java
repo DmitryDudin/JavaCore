@@ -58,6 +58,10 @@ public enum SpringBaseError {
     }
 
     public abstract String getOwnMethod();//этот метод должны реализовать все элементы(классы)
+
+    public static String staticMethod() {
+        return "staticMethodString";
+    }
 }
 
 //Элементы enum SpringBaseError - это статически доступные экземпляры enum-класса SpringBaseError.

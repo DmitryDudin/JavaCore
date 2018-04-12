@@ -18,6 +18,8 @@ public class BasicTest {
         System.out.println("-----------------------------------------------");
         System.out.println("type class: " + Type.FLOAT.getClass());
         System.out.println("type superClass: " + Type.FLOAT.getClass().getSuperclass());
+        System.out.println("-----------------------------------------------");
+        System.out.println("staticMethod = "+SpringBaseError.staticMethod());
     }
 
     @Test
