@@ -15,9 +15,7 @@ public class ReaderTests {
         String readLine = reader.readLine();
         System.out.println(readLine);
         Scanner scanner = new Scanner(System.in);
-        while (true)
-
-        {
+        while (true) {
 //            scanner.
             System.out.print("Введите любое целое число от 1 до 10: ");
 //            Scanner scan = new Scanner(System.in)

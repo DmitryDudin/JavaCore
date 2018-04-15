@@ -9,4 +9,7 @@ issues:
 1. copy file
 2. read file from disk
 3. write file on disk
-4.
+4. Object to byte array
+5. array to Object
+6. create file
+7. primitive type variables to/from stream
