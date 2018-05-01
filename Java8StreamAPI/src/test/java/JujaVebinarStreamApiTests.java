@@ -1,3 +1,4 @@
+import com.google.common.collect.ImmutableList;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -551,4 +553,11 @@ public class JujaVebinarStreamApiTests {
     }
 
 
+    @Test
+    public void returnImmutableList() {
+        List<User> testList = new ArrayList();
+        testList.stream()
+                .map(user -> user.getId())
+                .collect(collectingAndThen(toList(), ImmutableList::copyOf));
+    }
 }
