@@ -17,7 +17,7 @@ public class RegexToMatchWholeWordsUsingWordBoundaries {
         System.out.println("1------------------");
         while (matcher.find()) {
             System.out.print("Start index: " + matcher.start());
-            System.out.print(" End index: " + matcher.end() + " ");
+            System.out.print(" End index: " + matcher.end() + " --- ");
             System.out.println(matcher.group());
         }
 
@@ -26,13 +26,14 @@ public class RegexToMatchWholeWordsUsingWordBoundaries {
         System.out.println("2------------------");
         while (matcher2.find()) {
             System.out.print("Start index: " + matcher2.start());
-            System.out.print(" End index: " + matcher2.end() + " ");
+            System.out.print(" End index: " + matcher2.end() + " --- ");
             System.out.println(matcher2.group());
         }
     }
 
     @Test
     public void regexToMatchWordWithNonboundariesInJava() {
+//        String regex = "\\B(java|java)\\B";//???
         String regex = "\\Bjava|java\\B";
         Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 
@@ -41,7 +42,7 @@ public class RegexToMatchWholeWordsUsingWordBoundaries {
         System.out.println("1------------------");
         while (matcher.find()) {
             System.out.print("Start index: " + matcher.start());
-            System.out.print(" End index: " + matcher.end() + " ");
+            System.out.print(" End index: " + matcher.end() + " --- ");
             System.out.println(matcher.group());
         }
 
@@ -51,7 +52,7 @@ public class RegexToMatchWholeWordsUsingWordBoundaries {
         System.out.println("2------------------");
         while (matcher2.find()) {
             System.out.print("Start index: " + matcher2.start());
-            System.out.print(" End index: " + matcher2.end() + " ");
+            System.out.print(" End index: " + matcher2.end() + " --- ");
             System.out.println(matcher2.group());
         }
     }
@@ -68,7 +69,7 @@ public class RegexToMatchWholeWordsUsingWordBoundaries {
         Matcher matcher = pattern.matcher(data1);
         while (matcher.find()) {
             System.out.print("Start index: " + matcher.start());
-            System.out.print(" End index: " + matcher.end() + " ");
+            System.out.print(" End index: " + matcher.end() + " --- ");
             System.out.println(matcher.group());
         }
     }
