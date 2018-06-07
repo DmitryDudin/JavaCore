@@ -552,6 +552,14 @@ public class JujaVebinarStreamApiTests {
         System.out.println("codePoints=" + Arrays.toString(codePoints.toArray()));
     }
 
+    @Test
+    public void forStream() {
+        //replace for cycle
+        IntStream.range(0, 10)//0-9
+                .mapToObj(value -> new Integer(value))
+                .peek(System.out::println)
+                .collect(toList());
+    }
 
     @Test
     public void returnImmutableList() {
