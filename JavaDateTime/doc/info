@@ -1,2 +1,5 @@
 Instant:
     Instant represents a moment on the timeline in UTC with a resolution of up to nanoseconds
+
+Java 8 Date and Time:
+    https://www.foreach.be/blog/java-8-date-and-time
