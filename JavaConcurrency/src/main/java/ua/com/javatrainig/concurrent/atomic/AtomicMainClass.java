@@ -1,5 +1,7 @@
 package ua.com.javatrainig.concurrent.atomic;
 
+import lombok.Synchronized;
+
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
