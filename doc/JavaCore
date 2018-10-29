@@ -1,0 +1,10 @@
+--------------------------------------------------------------------------------------------------------------------
+Mixins:
+    Interfaces are ideal for defining mixins. Loosely speaking, a mixin is a type that a class can implement
+    in addition to its "primary type" to declare that it provides some optional behaviour. For exampleComparable
+    is a mixin interface that allows a class to declare that it its instances are ordered with respect to other
+    mutually comparable objects. Such an interface is called mixin because it allows the optional functionality
+    to be "mixed in" to the type's primary functionality. Abstract classes can't be used to define mixins
+    for the same reason that they can't be be retrofitted onto existing classes: a class cannot have
+    more than one parent, and there is no reasonable place in the class hierarchy to insert a mixin.
+--------------------------------------------------------------------------------------------------------------------
