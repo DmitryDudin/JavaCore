@@ -4,6 +4,9 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 public class FileCreation {
 
@@ -36,4 +39,11 @@ public class FileCreation {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void shouldCreateFileFromInputStream() throws IOException {
+        byte[] bytes = new byte[]{1,2,3,4,5,6,7};
+        Files.write(Paths.get("PathsFile"), bytes, StandardOpenOption.CREATE_NEW);
+    }
+
 }
