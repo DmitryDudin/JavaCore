@@ -1,5 +1,6 @@
 import org.junit.Test;
 
+import java.time.Clock;
 import java.time.LocalDateTime;
 
 public class LocalDateTimeTest {
@@ -10,4 +11,10 @@ public class LocalDateTimeTest {
         System.out.println("LocalDateTime now = " + now);
     }
 
+    @Test
+    public void nowUtc() {
+//        LocalDateTime.now(ZoneId.of("UTC"));
+//        LocalDateTime.now(ZoneId.of("GMT"));
+        LocalDateTime.now(Clock.systemUTC());
+    }
 }

@@ -3,3 +3,12 @@ Instant:
 
 Java 8 Date and Time:
     https://www.foreach.be/blog/java-8-date-and-time
+
+SimpleDateFormat and locale based format string(!!!!!!!!!!)
+    https://stackoverflow.com/questions/1661325/simpledateformat-and-locale-based-format-string
+-----------------------------------------------------------------------------------------------------------------------
+Some tricks:
+    new LocalDateTime(t.getTime()).toDateTime(DateTime.UTC)    <-  server should be setup with UTC timezone
+    new LocalDateTime(t.getTime(), DateTime.UTC).toDateTime()  <-  server timezone doesn't matter
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
