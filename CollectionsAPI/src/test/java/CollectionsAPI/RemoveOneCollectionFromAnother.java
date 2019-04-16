@@ -84,9 +84,10 @@ public class RemoveOneCollectionFromAnother {
                 new User(3l, "user3@gmail.com", null, true)
         );
         List list = ListUtils.removeAll(users1, users2);
-        System.out.println(list);
+        System.out.println("ListUtils = "+list);
         users1.removeAll(users2);
-        System.out.println(users1);
+        System.out.println("users1 = "+users1);
+        System.out.println("users2 = "+users2);
 //        Set<User> difference = Sets.difference(users1, users2);
 //        System.out.println(difference);
     }
