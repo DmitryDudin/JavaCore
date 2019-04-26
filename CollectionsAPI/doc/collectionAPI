@@ -1,2 +1,30 @@
+------------------------------------------------------------------------------------------------------------------------
 
 https://codereview.stackexchange.com/questions/197501/bmi-calculator-assessor/197515#197515
+
+Hashset vs Treeset
+    https://stackoverflow.com/questions/1463284/hashset-vs-treeset
+
+------------------------------------------------------------------------------------------------------------------------
+HashSet is much faster than TreeSet (constant-time versus log-time for most operations like add,
+remove and contains) but offers no ordering guarantees like TreeSet.
+
+Important points:
+ - Both guarantee duplicate-free collection of elements
+ - It is generally faster to add elements to the HashSet and then convert the collection to a TreeSet
+   for a duplicate-free sorted traversal.
+ - None of these implementations are synchronized. That is if multiple threads access a set concurrently,
+   and at least one of the threads modifies the set, it must be synchronized externally.
+ - LinkedHashSet is in some sense intermediate between HashSet and TreeSet. Implemented as a hash table with
+   a linked list running through it, however,it provides insertion-ordered iteration which is
+   not same as sorted traversal guaranteed by TreeSet.
+------------------------------------------------------------------------------------------------------------------------
+removeAll() in ArrayList vs HashSet
+    https://stackoverflow.com/questions/34046119/removeall-in-arraylist-vs-hashset
+ - remove method of the HashSet offers constant time complexity O(1)
+ - The time complexity for the ArrayList remove method is O(n - index)
+
+------------------------------------------------------------------------------------------------------------------------
+Is there a better way to combine two string sets in java?
+    https://stackoverflow.com/questions/9062574/is-there-a-better-way-to-combine-two-string-sets-in-java/9062603
+------------------------------------------------------------------------------------------------------------------------
