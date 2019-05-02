@@ -2,9 +2,14 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 public class ConvertStringToDate {
+
+    public static final String TIME_ZONE_KIEV = "Europe/Kiev";
+    public static final String TIME_UTC = "UTC";
 
     @Test
     public void convertStringToDateInISO8601Format() {
@@ -29,4 +34,17 @@ public class ConvertStringToDate {
 
         System.out.println(anotherDate + " parses as " + random);
     }
+
+    @Test
+    public void toMillisUTCForZone() {
+        String dateTime = "2019-04-11T10:15:00";
+        String zone = TIME_ZONE_KIEV;
+        ZoneId zoneId = ZoneId.of(zone);
+        long millis = LocalDateTime.parse(dateTime, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+                .atZone(zoneId)
+                .toInstant()
+                .toEpochMilli();
+        System.err.println("millis= " + millis);
+    }
+
 }
