@@ -1,0 +1,13 @@
+------------------------------------------------------------------------------------------------------------------------
+Strings in Java have built-in support for regular expressions.
+Strings have four built-in methods for regular expressions: * matches(), * split()), * replaceFirst() * replaceAll()
+------------------------------------------------------------------------------------------------------------------------
+s.matches("regex")                              Evaluates if "regex" matches s. Returns only true if the WHOLE string can be matched.
+
+s.split("regex")                                Creates an array with substrings of s divided at occurrence of "regex".
+                                                "regex" is not included in the result.
+
+s.replaceFirst("regex"), "replacement"          Replaces first occurance of "regex" with "replacement.
+
+s.replaceAll("regex"), "replacement"            Replaces all occurances of "regex" with "replacement.
+------------------------------------------------------------------------------------------------------------------------

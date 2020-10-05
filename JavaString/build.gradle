@@ -1,7 +1,16 @@
 group 'ua.com.javatraining'
 version '1.0-SNAPSHOT'
 
+
 apply plugin: 'java'
+apply plugin: 'idea'
+
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
 
 sourceCompatibility = 1.8
 
@@ -24,11 +33,12 @@ dependencies {
     compile "ch.qos.logback:logback-classic:${logbackClassicVersion}"
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+    compile 'org.springframework:spring-context:4.2.1.RELEASE'
 }
 
-task wrapper(type: Wrapper) {
+/*task wrapper_1(type: Wrapper) {
     description = 'Generates gradlew[.bat] scripts'
     gradleVersion = '4.6'
 //    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
     distributionType = 'ALL'
-}
+}*/

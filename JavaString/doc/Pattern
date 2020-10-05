@@ -1,0 +1,12 @@
+------------------------------------------------------------------------------------------------------------------------
+For advanced regular expressions the java.util.regex.Pattern and java.util.regex.Matcher classes are used.
+------------------------------------------------------------------------------------------------------------------------
+If a pattern is to be used multiple times, compiling it once and reusing it will be more efficient
+than invoking this method each time.
+
+You first create a Pattern object which defines the regular expression.
+This Pattern object allows you to create a Matcher object for a given string.
+This Matcher object then allows you to do regex operations on a String.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
