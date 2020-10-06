@@ -33,6 +33,8 @@ dependencies {
     compile "ch.qos.logback:logback-classic:${logbackClassicVersion}"
 
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.15'
+
     compile 'org.springframework:spring-context:4.2.1.RELEASE'
 }
 

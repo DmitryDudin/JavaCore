@@ -1,0 +1,51 @@
+------------------------------------------------------------------------------------------------------------------------
+The Java regex API also allows us to use quantifiers.
+These enable us to further tweak the match's behavior by specifying the number of occurrences to match against.
+
+------------------------------------------------------------------------------------------------------------------------
+- To match a text zero or one time, we use the ? quantifier:
+     int matches = runTest("\\a?", "hi");   --> 3
+
+  Alternatively, we can use the brace syntax, also supported by the Java regex API
+     int matches = runTest("\\a{0,1}", "hi");   --> 3
+
+  This example introduces the concept of zero-length matches.(!!!!!!!!!!!!!!)
+  It so happens that if a quantifier's threshold for matching is zero,
+  it always matches everything in the text including an empty String at the end of every input.
+  This means that even if the input is empty, it will return one zero-length match.
+
+  This explains why we get 3 matches in the above example despite having a String of length two.
+  The third match is zero-length empty String.
+
+- To match a text zero or limitless times, we us * quantifier, it is just similar to ?:
+    int matches = runTest("\\a*", "hi");  --> 3
+
+  Supported alternative:
+    int matches = runTest("\\a{0,}", "hi");  --> 3
+
+- The quantifier with a difference is +, it has a matching threshold of 1.
+  If the required String does not occur at all, there will be no match, not even a zero-length String:
+    int matches = runTest("\\a+", "hi");   --> 0
+
+  Supported alternative:
+    int matches = runTest("\\a{1,}", "hi");   --> 0
+
+- the brace syntax can be used to match a given text a number of times:
+    int matches = runTest("a{3}", "aaaaaa");  --> 2
+
+  In the above example, we get two matches since a match occurs only if a appears three times in a row.
+  However, in the next test we won't get a match since the text only appears two times in a row:
+     int matches = runTest("a{3}", "aa");  --> 0
+
+- When we use a range in the brace, the match will be greedy, matching from the higher end of the range:
+    int matches = runTest("a{2,3}", "aaaa");  --> 1
+
+  We've specified at least two occurrences but not exceeding three,
+  so we get a single match instead where the matcher sees a single aaa and a lone a which can't be matched.
+
+  However, the API allows us to specify a lazy or reluctant approach such that the matcher can start from the lower
+  end of the range in which case matching two occurrences as aa and aa:
+    int matches = runTest("a{2,3}?", "aaaa");
+-
+-
+------------------------------------------------------------------------------------------------------------------------

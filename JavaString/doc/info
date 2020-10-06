@@ -1,3 +1,5 @@
+------------------------------------------------------------------------------------------------------------------------
+
 Регулярные выражения в Java
     http://www.quizful.net/post/Java-RegExp
 
@@ -7,8 +9,24 @@ Java regular expression OR operator
 Java Regex - Java Regular Expressions
     http://tutorials.jenkov.com/java-regex/index.html
 
+Online tool like Regexr(!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+    https://regexr.com/4vdaf
+
 patterns constructor(!!!)
     https://regex101.com/
 
 Regular expressions in Java - Tutorial
     https://www.vogella.com/tutorials/JavaRegularExpressions/article.html
+
+A Guide To Java Regular Expressions API
+    https://www.baeldung.com/regular-expressions-java
+
+How to Use Regular Expressions to Replace Tokens in Strings in Java
+    https://www.baeldung.com/java-regex-token-replacement
+
+
+------------------------------------------------------------------------------------------------------------------------
+usefull hack  -  test regular expression with intellij idea be Ctrl+R  (!!!!!!!!!!!!!!)
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

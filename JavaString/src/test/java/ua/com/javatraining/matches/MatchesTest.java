@@ -1,6 +1,7 @@
 package ua.com.javatraining.matches;
 
 import org.junit.Test;
+import ua.com.javatraining.RegexUtils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +16,14 @@ public class MatchesTest {
     @Test
     public void test1() {
         System.out.println(EXAMPLE_TEST.matches("\\w.*"));
+    }
+
+    @Test
+    public void givenText_whenSimpleRegexMatches_thenCorrect() {
+        Pattern pattern = Pattern.compile("foo");
+        Matcher matcher = pattern.matcher("foo");
+
+        assertTrue(matcher.find());
     }
 
     @Test
