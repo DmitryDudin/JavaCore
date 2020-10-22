@@ -1,0 +1,43 @@
+------------------------------------------------------------------------------------------------------------------------
+Generics in Java
+    https://marcin-chwedczuk.github.io/generics-in-java
+------------------------------------------------------------------------------------------------------------------------
+Java Generics were introduced in JDK 5.0 with the aim of reducing bugs and adding an extra layer of abstraction over types.
+------------------------------------------------------------------------------------------------------------------------
+Generics were added to Java to ensure type safety.(!!!!!!!!!!!!!)
+------------------------------------------------------------------------------------------------------------------------
+This is the core idea behind generics:
+    It would be much easier if programmers could express their intention of using specific types
+    and the compiler can ensure the correctness of such type.
+------------------------------------------------------------------------------------------------------------------------
+diamond operator <>
+    - we specify the type that will be held inside the list.
+    - The compiler can enforce the type at compile time.
+------------------------------------------------------------------------------------------------------------------------
+Oracle recommendation is to use an uppercase letter to represent a generic type
+and to choose a more descriptive letter to represent formal types,
+for example in Java Collections T is used for type, K for key, V for value.
+---
+The most common names are:
+        E - Element
+        K - Key
+        N - Number
+        T - Type
+        V - Value
+        S,U,V etc. - 2nd, 3rd, 4th types
+---
+
+---
+------------------------------------------------------------------------------------------------------------------------
+Generics are a compile-time feature,
+meaning the type parameter is erased and all generic types are implemented as type Object.
+------------------------------------------------------------------------------------------------------------------------
+«Дженерики», доступные с Java 5, сделали использование Java Collection Framework проще, удобнее и безопаснее.
+Ошибки, связанные с некорректным использованием типов, теперь обнаруживаются на этапе компиляции.
+------------------------------------------------------------------------------------------------------------------------
+List<Account> accounts   --   можно прочитать как список объектов класса Account
+------------------------------------------------------------------------------------------------------------------------
+        sum += ((Account) account).getAmount(); // (2)
+Если потребуется, приведение типов (casting) будет сделано на этапе компиляции.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

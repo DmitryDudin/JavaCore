@@ -1,0 +1,26 @@
+------------------------------------------------------------------------------------------------------------------------
+type parameters can be bounded
+---
+Bounded means “restricted“, we can restrict types that can be accepted by a method.
+---
+
+---
+------------------------------------------------------------------------------------------------------------------------
+upper bound
+    - method accepts a type and all its subclasses
+    - To declare an upper bounded type we use the keyword extends after the type followed by the upper bound that we want to use.
+      The keyword extends is used here to mean that the type T
+          - extends the upper bound in case of a class or
+          - implements an upper bound in case of an interface.
+---
+lower bound  - method accepts a type and all its superclasses(????????????????)
+------------------------------------------------------------------------------------------------------------------------
+Multiple Bounds
+    A type can also have multiple upper bounds as follows:
+
+        <T extends Number & Comparable>
+
+    If one of the types that are extended by T is a class (i.e Number), it must be put first in the list of bounds.
+    Otherwise, it will cause a compile-time error.
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

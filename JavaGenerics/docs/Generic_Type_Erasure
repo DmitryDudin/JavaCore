@@ -1,0 +1,47 @@
+------------------------------------------------------------------------------------------------------------------------
+Generics were added to Java to ensure type safety
+and to ensure that generics wouldn't cause overhead at runtime,
+the compiler applies a process called type erasure on generics at compile time.(!!!!!!!!!)
+------------------------------------------------------------------------------------------------------------------------
+Type erasure removes all type parameters and replaces it with their bounds
+or with Object if the type parameter is unbounded.
+Thus the bytecode after compilation contains only normal classes, interfaces and methods
+thus ensuring that no new types are produced.
+Proper casting is applied as well to the Object type at compile time.
+------------------------------------------------------------------------------------------------------------------------
+example of type erasure:
+        public <T> List<T> genericMethod(List<T> list) {
+            return list.stream().collect(Collectors.toList());
+        }
+
+With type erasure, the unbounded type T is replaced with Object as follows:
+        // for illustration
+        public List<Object> withErasure(List<Object> list) {
+            return list.stream().collect(Collectors.toList());
+        }
+
+        // which in practice results in
+        public List withErasure(List list) {
+            return list.stream().collect(Collectors.toList());
+        }
+---
+If the type is bounded, then the type will be replaced by the bound at compile time:
+        public <T extends Building> void genericMethod(T t) {
+            ...
+        }
+
+would change after compilation:
+        public void genericMethod(Building t) {
+            ...
+        }
+---
+(!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+при lower bounded тип стерается к Object, т.е. таким образом при стерании(erasure) тип всегда приводится к верхней границе.
+---
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+How to Get class of Elements that List Contains?
+    You can't because of type erasure. (!!!!!!!!!!!!!!!!)
+    The generic type is not known at runtime (it's 'erased'), it's only used at compile time.
+    This is a major difference between java generics and c# generics for example.
+------------------------------------------------------------------------------------------------------------------------

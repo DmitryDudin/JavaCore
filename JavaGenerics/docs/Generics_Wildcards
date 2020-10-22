@@ -1,0 +1,81 @@
+------------------------------------------------------------------------------------------------------------------------
+Wildcards
+    - represented by the question mark in Java “?”
+    - they are used to refer to an unknown type.
+    - Wildcards are particularly useful when using generics and can be used as a parameter type
+------------------------------------------------------------------------------------------------------------------------
+(!!!!!!!!!!!!)
+It is known that Object is the supertype of all Java classes,
+however, a collection of Object is not the supertype of any collection.
+
+For example, a List<Object> is not the supertype of List<String>
+and assigning a variable of type List<Object> to a variable of type List<String> will cause a compiler error.
+
+This is to prevent possible conflicts that can happen if we add heterogeneous types to the same collection.(!!!!!!!!!!!)
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+Bounded Wildcard:
+---
+Upper bounded wildcard:
+        public static void paintAllBuildings(List<? extends Building> buildings) {
+            ...
+        }
+
+Now, this method will work with type Building and all its subtypes. (= Building and all its subtypes)
+This is called an upper bounded wildcard where type Building is the upper bound.
+---
+Lower bounded wildcard:
+    Wildcards can also be specified with a lower bound, where the unknown type has to be a supertype of the specified type.
+    Lower bounds can be specified using the 'super' keyword followed by the specific type,
+    for example, <? super T> means unknown type that is a superclass of T (= T and all its parents).
+---
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+
+(!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+
+<? extends Number> - объекты, класс которых является Number или наследуется от Number
+<? super Number> - объекты, класс которых Number или у которых Number является наследником (супертип от Number).
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+(!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+Если контейнер объявлен с wildcard <? extends>, то можно только читать значения.
+В список нельзя ничего добавить, кроме null.
+Для того чтобы добавить объект в список нам нужен другой тип wildcard — ? super
+------------------------------------------------------------------------------------------------------------------------
+(!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+Нельзя прочитать элемент из контейнера с wildcard <? super>, кроме объекта класса Object
+------------------------------------------------------------------------------------------------------------------------
+Всегда ли Generics инварианты? Нет. Приведу примеры:
+        List<Integer> ints = new ArrayList<Integer>();
+        List<? extends Number> nums = ints;
+
+Это ковариантность. List<Integer> — подтип List<? extends Number>
+
+        List<Number> nums = new ArrayList<Number>();
+        List<? super Integer> ints = nums;
+
+Это контравариантность. List<Number> является подтипом List<? super Integer>.
+
+Запись вида "? extends ..." или "? super ..." — называется wildcard или символом подстановки,
+с верхней границей (extends) или с нижней границей (super).
+List<? extends Number> может содержать объекты, класс которых является Number или наследуется от Number.
+List<? super Number> может содержать объекты, класс которых Number или у которых Number
+является наследником (супертип от Number).
+
+------------------------------------------------------------------------------------------------------------------------
+
+extends B — символ подстановки с указанием верхней границы
+super B — символ подстановки с указанием нижней границы
+где B — представляет собой границу
+
+Запись вида T2 <= T1 означает, что набор типов описываемых T2 является подмножеством набора типов описываемых T1
+    - Number <= (? extends Object)
+    - (? extends Number) <= (? extends Object)
+    - (? super Object) <= (? super Number)
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
