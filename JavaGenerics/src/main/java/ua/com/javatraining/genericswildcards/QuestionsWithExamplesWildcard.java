@@ -11,7 +11,7 @@ public class QuestionsWithExamplesWildcard {
         ints.add(1);
         ints.add(2);
         List<? extends Number> nums = ints;
-        nums.add(3.14); // compile-time error
+//        nums.add(3.14); // compile-time error
 
 //        Если контейнер объявлен с wildcard ? extends, то можно только читать значения.
 //        В список нельзя ничего добавить, кроме null.
@@ -21,9 +21,13 @@ public class QuestionsWithExamplesWildcard {
 
     public static <T> T getFirst(List<? super T> list) {
         //        Почему нельзя получить элемент из списка ниже?
-        return list.get(0); // compile-time error
 
+
+//        return list.get(0); // compile-time error
 //        Нельзя прочитать элемент из контейнера с wildcard <? super>, кроме объекта класса Object
+
+//        Object object = list.get(0);
+        return null;
     }
 
     public static <T> Object getFirstAnswer(List<? super T> list) {

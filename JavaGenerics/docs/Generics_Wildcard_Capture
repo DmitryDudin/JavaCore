@@ -1,0 +1,71 @@
+------------------------------------------------------------------------------------------------------------------------
+Wildcard Capture
+What is the capture of a wildcard? (!!!!!!!!!!!!)
+    http://www.angelikalanger.com/GenericsFAQ/FAQSections/TechnicalDetails.html#What%20is%20the%20capture%20of%20a%20wildcard?
+------------------------------------------------------------------------------------------------------------------------
+Wildcard Capture:
+
+Попробуем теперь реализовать метод, выполняющий перестановку элементов списка в обратном порядке.
+
+        public static void reverse(List<?> list);
+
+        // Ошибка!
+        public static void reverse(List<?> list) {
+          List<Object> tmp = new ArrayList<Object>(list);
+          for (int i = 0; i < list.size(); i++) {
+            list.set(i, tmp.get(list.size()-i-1)); // compile-time error
+          }
+        }
+
+Ошибка компиляции возникла, потому что в методе reverse в качестве аргумента принимается список
+с неограниченным символом подстановки <?> .
+<?> означает то же что и <? extends Object>. Следовательно, согласно принципу PECS, list – это producer.
+А producer только продюсирует элементы. А мы в цикле for вызываем метод set(),
+т.е. пытаемся записать в list.
+И поэтому упираемся в защиту Java, что не позволяет установить какое-то значение по индексу.
+
+Что делать? Нам поможет паттерн Wildcard Capture.
+Здесь мы создаем обобщенный метод rev. Он объявлен с переменной типа T.
+Этот метод принимает список типов T, и мы можем сделать сет.
+
+        public static void reverse(List<?> list) {
+          rev(list);
+        }
+
+        private static <T> void rev(List<T> list) {
+          List<T> tmp = new ArrayList<T>(list);
+          for (int i = 0; i < list.size(); i++) {
+            list.set(i, tmp.get(list.size()-i-1));
+          }
+        }
+
+Теперь у нас все скомпилируется.
+Здесь произошел захват символа подстановки (wildcard capture).
+При вызове метода reverse(List<?> list) в качестве аргумента передается список каких-то объектов (например, строк или целых чисел).
+Если мы можем захватить тип этих объектов и присвоить его переменной типа X, то можем заключить, что T является X.
+
+Более подробно о Wildcard Capture можно прочитать здесь и здесь:
+    https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.10
+    https://docs.oracle.com/javase/tutorial/java/generics/capture.html
+
+------------------------------------------------------------------------------------------------------------------------
+Не используйте Raw типы! Если аргумент типа не определен, то используйте wildcard <?>.
+------------------------------------------------------------------------------------------------------------------------
+
+что можно положить сюда - List<?> wildcardList = new ArrayList<>();
+------------------------------------------------------------------------------------------------------------------------
+---
+An anonymous type variable that represents the particular unknown type that the wildcard stands for.
+The compiler uses the capture internally for evaluation of expressions
+and the term "capture of ?" occasionally shows up in error message.
+---
+The wildcard capture can be imagined as an anonymous type variable that the compiler generates internally
+and uses as the static type of the method parameter.
+A type variable is like a type parameter of a generic type or method; it stands for a particular unknown type.
+Changing the method parameter's type from the instantiation using a wildcard
+to an instantiation using the capture is known as capture conversion .
+---
+------------------------------------------------------------------------------------------------------------------------
+компилятор подменяет wildcard  на capture wildcard (!!!!!!!!!!!!!!!!!!)
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

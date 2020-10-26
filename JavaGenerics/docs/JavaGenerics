@@ -1,6 +1,16 @@
 ------------------------------------------------------------------------------------------------------------------------
 Generics in Java
     https://marcin-chwedczuk.github.io/generics-in-java
+
+---
+
+Вот другие источники, которые помогут вам в освоении темы:
+
+    Naftalin, Maurice; Wadler, Philip. Java Generics and Collections. O'Reilly Media. ISBN-13: 978-0596527754
+    https://docs.oracle.com/javase/specs/jls/se8/html/index.html
+    Язык программирования Java SE 8. Addison-Wesley. ISBN: 978-5-8459-1875-8
+    Bloch, Joshua. Effective Java. Third Edition. Addison-Wesley. ISBN-13: 978-0-13-468599-1
+
 ------------------------------------------------------------------------------------------------------------------------
 Java Generics were introduced in JDK 5.0 with the aim of reducing bugs and adding an extra layer of abstraction over types.
 ------------------------------------------------------------------------------------------------------------------------
@@ -40,4 +50,10 @@ List<Account> accounts   --   можно прочитать как список 
         sum += ((Account) account).getAmount(); // (2)
 Если потребуется, приведение типов (casting) будет сделано на этапе компиляции.
 ------------------------------------------------------------------------------------------------------------------------
+Generics задизайнены как type safe - т.е. если код компилируется, то ничего не упадет в рантайме.
+
+массивы не type safe:
+    Number[] nums = new Integer[1];
+    nums[0] = 3.3d;  // ArrayStoreException
+
 ------------------------------------------------------------------------------------------------------------------------

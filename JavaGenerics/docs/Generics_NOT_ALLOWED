@@ -1,0 +1,50 @@
+------------------------------------------------------------------------------------------------------------------------
+- не можем параметризировать классы имеющие в предках Throwable
+    try{
+        run();
+    }
+    catch(CustomException<String> e){
+
+    }
+    catch(CustomException<Integer> e){
+
+    }
+
+информации о типе исключения в рантайме уже нет
+type erasure приведет к одинаковому exception
+------------------------------------------------------------------------------------------------------------------------
+- не можем параметризировать анонимные классы
+    т.к. сразу создаём инстанс
+---
+- не можем параметризировать enums
+------------------------------------------------------------------------------------------------------------------------
+What is not allowed to do with Generics?
+---
+ You can’t have static field of type
+
+        public class GenericsExample<T>
+        {
+           private static T member; //This is not allowed
+        }
+---
+You can not create an instance of T
+
+        public class GenericsExample<T>
+        {
+           public GenericsExample(){
+              new T();
+           }
+        }
+---
+Generics are not compatible with primitives in declarations
+
+        final List<int> ids = new ArrayList<>();    //Not allowed
+
+        final List<Integer> ids = new ArrayList<>(); //Allowed
+---
+You can’t create Generic exception class
+
+        // causes compiler error
+        public class GenericException<T> extends Exception {}
+---
+------------------------------------------------------------------------------------------------------------------------

@@ -1,8 +1,4 @@
-package ua.com.javatraining.enericTypeInformationIsAvailableAtRuntime;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+package ua.com.javatraining.genericTypeInformationIsAvailableAtRuntime;
 
 public class GenericTypeInformationIsAvailableAtRuntime {
 
