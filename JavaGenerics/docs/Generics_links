@@ -1,0 +1,42 @@
+------------------------------------------------------------------------------------------------------------------------
+
+Александр Маторин — Неочевидные Дженерики (class UnobviousGenerics)
+    https://www.youtube.com/watch?v=mNyQYTp-Njw&t=1s
+
+Difference between <? super T> and <? extends T> in Java [duplicate]
+    https://stackoverflow.com/questions/4343202/difference-between-super-t-and-extends-t-in-java
+
+What is PECS (Producer Extends Consumer Super)?
+    https://stackoverflow.com/questions/2723397/what-is-pecs-producer-extends-consumer-super
+
+Resource for learning Java generics? [closed]
+    https://stackoverflow.com/questions/864773/resource-for-learning-java-generics
+
+Baeldung Generics
+    https://www.baeldung.com/?s=Generics
+
+------------------------------------------------------------------------------------------------------------------------
+Wildcard Capture
+
+What is the capture of a wildcard? (!!!!!!!!!!!!)
+    http://www.angelikalanger.com/GenericsFAQ/FAQSections/TechnicalDetails.html#What%20is%20the%20capture%20of%20a%20wildcard?
+
+Wildcard Capture and Helper Methods
+    https://docs.oracle.com/javase/tutorial/java/generics/capture.html
+
+5.1.10. Capture Conversion
+    https://docs.oracle.com/javase/specs/jls/se8/html/jls-5.html#jls-5.1.10
+------------------------------------------------------------------------------------------------------------------------
+super type token pattern
+
+Super Type Tokens in Java Generics
+    https://www.baeldung.com/java-super-type-tokens
+     (This approach for preserving the generic type information is usually known as super type token:)
+
+
+------------------------------------------------------------------------------------------------------------------------
+Reifiable
+
+Java Generics – <?> vs <? extends Object>
+    https://www.baeldung.com/java-generics-vs-extends-object
+------------------------------------------------------------------------------------------------------------------------

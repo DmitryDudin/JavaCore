@@ -1,0 +1,70 @@
+------------------------------------------------------------------------------------------------------------------------
+Java Generics – <?> vs <? extends Object>
+    https://www.baeldung.com/java-generics-vs-extends-object
+------------------------------------------------------------------------------------------------------------------------
+Reifiable(надежный, достоверный, безотказный) типы:
+
+В Java мы говорим, что тип является reifiable, если информация о нем полностью доступна во время выполнения программы.
+В reifiable типы входят:
+    - Примитивные типы (int, long, boolean)
+    - Непараметризованные (необобщенные) типы (String, Integer)
+    - Параметризованные типы, параметры которых представлены в виде unbounded wildcard (неограниченных
+      символов подстановки) (List<?>, Collection<?>)
+    - Raw (несформированные) типы (List, ArrayList)
+    - Массивы, компоненты которых — Reifiable типы (int[], Number[], List<?>[], List[)
+
+Почему информация об одних типах доступна, а о других нет?
+Дело в том, что из-за процесса затирания типов компилятором информация о некоторых типах может быть потеряна.
+Если она потерялась, то такой тип будет уже не reifiable.
+То есть она во время выполнения недоступна. Если доступна – соответственно, reifiable.
+
+Решение не делать все обобщенные типы доступными во время выполнения — это одно из наиболее важных и противоречивых
+проектных решений в системе типов Java. Так сделали, в первую очередь, для совместимости с существующим кодом.
+За миграционную совместимость пришлось платить — полная доступность системы обобщенных типов во время выполнения невозможна.
+
+Какие типы не являются reifiable:
+    - Переменная типа (T)
+    - Параметризованный тип с указанным типом параметра (List<Number> ArrayList<String>, List<List<String>>)
+    - Параметризованный тип с указанной верхней или нижней границей (List<? extends Number>, Comparable<? super String>).
+      Но здесь стоит оговориться: List<? extends Object> — не reifiable, а List<?> — reifiable
+
+
+------------------------------------------------------------------------------------------------------------------------
+Почему в примере ниже нельзя создать параметризованный Exception?
+
+        class MyException<T> extends Exception {      // Generic class may not extend ‘java.lang.Throwable’
+           T t;
+        }
+
+Ответ
+Каждое catch выражение в try-catch проверяет тип полученного исключения
+во время выполнения программы (что равносильно instanceof),  соответственно, тип должен быть Reifiable.
+Поэтому Throwable и его подтипы не могут быть параметризованы.
+
+------------------------------------------------------------------------------------------------------------------------
+Technically speaking, the generic types are not reified in Java.
+In programming language's terminology, when a type is present at runtime, we say that type is reified.
+
+The reified types in Java are as follows:
+
+    - Simple primitive types such as long
+    - Non-generic abstractions such as String or Runnable
+    - Raw types such as List or HashMap
+    - Generic types in which all types are unbounded wildcards such as List<?> or HashMap<?, ?>
+    - Arrays of other reified types such as String[], int[], List[], or Map<?, ?>[]
+------------------------------------------------------------------------------------------------------------------------
+Reifiable types are those whose type is not erased at compile time.
+In other words, a non-reifiable type's runtime representation will have less information
+than its compile-time counterpart, because some of it'll get erased.
+
+As a general rule, parameterized types are not reifiable.
+This means List<String> and Map<Integer, String> are not reifiable.
+The compiler erases their type and treats them as a List and Map respectively.
+
+The only exception to this rule is unbounded wildcard types. This means List<?> and Map<?,?> are reifiable. (!!!!!!!!!!!)
+
+On the other hand, List<? extends Object> is not reifiable. While subtle, this is a notable difference.
+Non-reifiable types cannot be used in certain situations such as in an instanceof operator or as elements of an array.
+
+
+------------------------------------------------------------------------------------------------------------------------

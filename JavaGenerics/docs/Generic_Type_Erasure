@@ -1,0 +1,88 @@
+------------------------------------------------------------------------------------------------------------------------
+Generics were added to Java to ensure type safety
+and to ensure that generics wouldn't cause overhead at runtime,
+the compiler applies a process called type erasure on generics at compile time.(!!!!!!!!!)
+------------------------------------------------------------------------------------------------------------------------
+Type erasure removes all type parameters and replaces it with their bounds
+or with Object if the type parameter is unbounded.
+Thus the bytecode after compilation contains only normal classes, interfaces and methods
+thus ensuring that no new types are produced.
+Proper casting is applied as well to the Object type at compile time.
+------------------------------------------------------------------------------------------------------------------------
+example of type erasure:
+        public <T> List<T> genericMethod(List<T> list) {
+            return list.stream().collect(Collectors.toList());
+        }
+
+With type erasure, the unbounded type T is replaced with Object as follows:
+        // for illustration
+        public List<Object> withErasure(List<Object> list) {
+            return list.stream().collect(Collectors.toList());
+        }
+
+        // which in practice results in
+        public List withErasure(List list) {
+            return list.stream().collect(Collectors.toList());
+        }
+---
+If the type is bounded, then the type will be replaced by the bound at compile time:
+        public <T extends Building> void genericMethod(T t) {
+            ...
+        }
+
+would change after compilation:
+        public void genericMethod(Building t) {
+            ...
+        }
+---
+(!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+при lower bounded тип стерается к Object, т.е. таким образом при стерании(erasure) тип всегда приводится к верхней границе.
+---
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+How to Get class of Elements that List Contains?
+    You can't because of type erasure. (!!!!!!!!!!!!!!!!)
+    The generic type is not known at runtime (it's 'erased'), it's only used at compile time.
+    This is a major difference between java generics and c# generics for example.
+------------------------------------------------------------------------------------------------------------------------
+Type Erasure представляет собой отображение типов (возможно, включая параметризованные типы и переменные типа) на типы,
+которые никогда не являются параметризованными типами или переменными типами. Мы записываем затирание типа T как |T|.
+
+Отображение затирания определяется следующим образом:
+    - Затиранием параметризованного типа G<T1,...,Tn> является |G|
+    - Затиранием вложенного типа T.C является |T|.C
+    - Затиранием типа массива T[] является |T|[]
+    - Затиранием переменной типа является затирание ее левой границы
+    - Затиранием любого иного типа является сам этот тип
+
+
+В процессе выполнения Type Erasure (затирания типов) компилятор производит следующие действия:
+    - добавляет приведение типов для обеспечения type safety, если это необходимо
+    - генерирует Bridge методы для сохранения полиморфизма (!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+
+                  T (Тип)                            |    |T| (Затирание типа)
+-----------------------------------------------------|-------------------------------------
+List< Integer>, List< String>, List< List< String>>  |   List
+List< Integer>[]                                     |   List[]
+List                                                 |   List
+int                                                  |   int
+Integer                                              |   Integer
+<T extends Comparable<T>>                            |   Comparable
+<T extends Object & Comparable<? super T>>           |   Object
+LinkedCollection<E>.Node                             |   LinkedCollection.Node
+
+Эта таблица показывает, во что превращаются разные типы в процессе затирания, Type Erasure.
+------------------------------------------------------------------------------------------------------------------------
+Type Erasure - это
+    - процедура стирания дженериков на уровне компиляции.
+    - вставка кастования (компилятор вставляет cast)
+    - генерация бридж методов
+------------------------------------------------------------------------------------------------------------------------
+- если у дженерика есть граница - то он стирается не в Object, а в левую границу
+- если multiple bounds - то стирается к первой границе
+        public abstract class Cage<T extends Animal & Comparable>
+------------------------------------------------------------------------------------------------------------------------
+- bridge методы нужны чтобы поддерживать отношение наследования (!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+------------------------------------------------------------------------------------------------------------------------
+-
+------------------------------------------------------------------------------------------------------------------------

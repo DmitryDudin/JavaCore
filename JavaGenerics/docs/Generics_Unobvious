@@ -1,0 +1,99 @@
+
+------------------------------------------------------------------------------------------------------------------------
+Why does this generic code compile in java 8?
+    https://stackoverflow.com/questions/38092697/why-does-this-generic-code-compile-in-java-8/38092952#38092952
+------------------------------------------------------------------------------------------------------------------------
+why? :
+
+        Class<Integer> intClazz = Integer.class;
+                System.out.println("intClazz = " + intClazz);
+
+                Integer i = 2016;
+                System.out.println("i.getClass() = " + i.getClass());
+        //        Class<Integer> iClazz= i.getClass();//not compile
+
+---
+в java есть ковариантность возвращаемого значения:
+
+        class Parent{
+            public Number run(String s){}
+        }
+
+        class Child extends Parent{
+            @Override
+            public Integer run(String s){}
+        }
+
+---
+метод Object.getClass() :
+
+        public final native Class<?> getClass();
+
+Returns the runtime class of this Object.
+The returned Class object is the object that is locked by static synchronized methods of the represented class.
+The actual result type is Class<? extends |X|> where |X| is the erasure of the static type of the expression
+on which getClass is called.
+---
+этот метод особенный т.к. он final, и java сама его override
+---
+Предположим выполнялось бы ковариантность возвращаемого занчения:
+
+        class Object{
+            Class<?> getClass();
+        }
+        class Number{
+            Class<Number> getClass();
+        }
+        class Integer{
+            Class<Integer> getClass();
+        }
+
+тогда:
+
+        Number num = new Integer(3);
+        Class<Number> numClazz = num.getClass();  --- это было бы heap pollution
+---
+т.е. Class<Integer> not extends Class<Number>   => intVar.getClass() returns Class<? extends Integer>
+---
+        Number numVar = Integer.valueOf(3);
+        final Class<? extends Number> numClazz = numVar.getClass();
+---
+---
+на самом деле сделано вот так:
+
+        class Object{
+            Class<?> getClass();
+        }
+        class Number{
+            Class<? extends Number> getClass();
+        }
+        class Integer{
+            Class<? extends Integer> getClass();
+        }
+------------------------------------------------------------------------------------------------------------------------
+not compile:
+
+        public class Helper<T> {
+
+            public List<Integer> numbers () {
+                return Arrays.asList(1, 2, 3);
+            }
+
+            public static void main(String[] args) {
+                Helper helper = new Helper<>();
+                for (Integer number: helper.numbers()) {//not compile
+                }
+
+            }
+        }
+---
+по спецификации java если создётся нетипизированный объект, даже если этот дженерик нигде не изпользуется,
+java стирает всю информацию о дженериках
+---
+как это поправить? - Всегда параметризуйте код (!!!!!!!!!!!!!!!!)
+
+        Helper<?> helper3 = new Helper<>();
+---
+------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------------

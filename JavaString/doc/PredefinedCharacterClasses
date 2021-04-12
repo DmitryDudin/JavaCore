@@ -1,0 +1,28 @@
+------------------------------------------------------------------------------------------------------------------------
+The Java regex API also accepts predefined character classes.
+Some of the above character classes can be expressed in shorter form though making the code less intuitive.
+One special aspect of the Java version of this regex is the escape character.
+
+As we will see, most characters will start with a backslash, which has a special meaning in Java.
+For these to be compiled by the Pattern class – the leading backslash must be escaped i.e. \d becomes \\d.
+
+- Matching digits, equivalent to [0-9]:
+    int matches = runTest("\\d", "123");  --> 3
+
+- Matching non-digits, equivalent to [^0-9]:
+    int mathces = runTest("\\D", "a6c");  --> 2
+
+- Matching white space:
+    int matches = runTest("\\s", "a c");  --> 1
+
+- Matching non-white space:
+    int matches = runTest("\\S", "a c");  --> 2
+
+- Matching a word character, equivalent to [a-zA-Z_0-9]:
+    int matches = runTest("\\w", "hi!");  --> 2
+
+- Matching a non-word character:
+    int matches = runTest("\\W", "hi!");  --> 1
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

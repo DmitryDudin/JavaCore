@@ -1,0 +1,23 @@
+
+1. map for everything without Object
+
+2. List<? extends Car> carListUpperBounded = new ArrayList<>();
+
+3. what the difference between Wildcard Type <?> and Element Type <E> ?
+
+4. why?
+    Если контейнер объявлен с wildcard '? extends', то можно только читать значения.
+    В список нельзя ничего добавить, кроме null.
+    Для того чтобы добавить объект в список нам нужен другой тип wildcard — '? super'
+
+5.
+
+6.
+
+7.
+
+8.
+
+9.
+
+10.

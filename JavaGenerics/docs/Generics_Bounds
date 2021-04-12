@@ -1,0 +1,40 @@
+------------------------------------------------------------------------------------------------------------------------
+type parameters can be bounded
+---
+Bounded means “restricted“, we can restrict types that can be accepted by a method.
+---
+
+---
+------------------------------------------------------------------------------------------------------------------------
+upper bound
+    - method accepts a type and all its subclasses
+    - To declare an upper bounded type we use the keyword extends after the type followed by the upper bound that we want to use.
+      The keyword extends is used here to mean that the type T
+          - extends the upper bound in case of a class or
+          - implements an upper bound in case of an interface.
+---
+lower bound  - method accepts a type and all its superclasses(????????????????)
+------------------------------------------------------------------------------------------------------------------------
+Multiple Bounds
+    A type can also have multiple upper bounds as follows:
+
+        <T extends Number & Comparable>
+
+    If one of the types that are extended by T is a class (i.e Number), it must be put first in the list of bounds.
+    Otherwise, it will cause a compile-time error.
+
+------------------------------------------------------------------------------------------------------------------------
+Multiple Bounds – множественные ограничения.
+Записывается через символ "&", то есть мы говорим, что тип, представленный переменной типа T,
+должен быть ограничен сверху классом Object и интерфейсом Comparable.
+
+        <T extends Object & Comparable<? super T>> T max(Collection<? extends T> coll)
+
+Запись Object & Comparable<? super T> образует тип пересечения Multiple Bounds.
+Первое ограничение — в данном случае Object — используется для erasure, процесса затирания типов.
+Его выполняет компилятор на этапе компиляции.
+
+
+Переменная типа может быть ограничена только сверху одним или несколькими типами.
+В случае множественного ограничения левая граница (первое ограничение) используется в процессе затирания (Type Erasure).
+------------------------------------------------------------------------------------------------------------------------

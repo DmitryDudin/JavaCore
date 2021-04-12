@@ -1,0 +1,61 @@
+------------------------------------------------------------------------------------------------------------------------
+Capturing Groups
+    https://docs.oracle.com/javase/tutorial/essential/regex/groups.html
+
+What is a non-capturing group in regular expressions?
+    https://stackoverflow.com/questions/3512471/what-is-a-non-capturing-group-in-regular-expressions
+------------------------------------------------------------------------------------------------------------------------
+The API also allows us to treat multiple characters as a single unit through capturing groups.
+
+------------------------------------------------------------------------------------------------------------------------
+what is back reference??????????????????????????????????????????????????????????????????????????????????????????
+
+    The section of the input string matching the capturing group(s) is saved in memory for later recall via backreference.
+    A backreference is specified in the regular expression as a backslash (\) followed by a digit indicating
+    the number of the group to be recalled.
+    For example, the expression (\d\d) defines one capturing group matching two digits in a row,
+    which can be recalled later in the expression via the backreference \1.
+------------------------------------------------------------------------------------------------------------------------
+Well, groups serve many purposes.
+They can help you to extract exact information from a bigger match (which can also be named),
+they let you rematch a previous matched group, and can be used for substitutions.
+------------------------------------------------------------------------------------------------------------------------
+named capturing group
+
+    Here we can see that getting the value of the named group out of the Matcher just involves using group
+    with the name as the input, rather than the number.
+            "\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"
+            match.group("placeholder")
+
+------------------------------------------------------------------------------------------------------------------------
+Capturing groups are numbered by counting their opening parentheses from left to right. In the expression ((A)(B(C))), for example, there are four such groups:
+
+1    	((A)(B(C)))
+2    	(A)
+3    	(B(C))
+4    	(C)
+
+Group zero always stands for the entire expression.
+------------------------------------------------------------------------------------------------------------------------
+non-capturing group:
+    (?<name>X)	X, as a named-capturing group
+    (?:X)	X, as a non-capturing group
+    You can use a non-capturing group to retain the organisational or grouping benefits
+    but without the overhead of capturing.
+    To write a non-capturing group, you place ?: as the first element inside the brackets.
+------------------------------------------------------------------------------------------------------------------------
+Common mistake: groups aren't optional unless you include a final '?'
+------------------------------------------------------------------------------------------------------------------------
+([0-9]+)(?:st|nd|rd|th)?
+
+This example matches either a sequence of digits,
+or a sequence of digits followed by one of the prefixes -st, -nd, -rd, -th (e.g. 1st, 4th).
+However, only the first group (the digits) is captured.
+The second group is non-capturing, introduced by ?: inside the brackets.
+Its sole purpose is to
+    (a) limit the scope of the choice operator– |– to part of the expression, and
+    (b) allow us to apply the ? operator to that sub-part of the expression.
+
+(Repetition operators such as ?, *, + always apply to the item immediately preceding;
+if we want that item to comprise various characters or elements, then we need to form a group.)
+------------------------------------------------------------------------------------------------------------------------

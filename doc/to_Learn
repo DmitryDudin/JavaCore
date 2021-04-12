@@ -1,0 +1,30 @@
+Handling checked exceptions in Java streams
+    https://www.oreilly.com/ideas/handling-checked-exceptions-in-java-streams
+
+Yassin Hajaj –  Medium
+    https://medium.com/@yassinhajaj
+
+How to Handle Checked Exceptions With Lambda Expression
+    https://dzone.com/articles/how-to-handle-checked-exception-in-lambda-expressi
+
+-----------------------------------------------------------------------------------------------------------------------
+@FunctionalInterface
+    public interface ThrowingConsumer<T> extends Consumer<T> {
+
+        default void accept(final T t) {
+            try {
+                acceptThrows(t);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        void acceptThrows(T elem) throws Exception;
+
+-----------------------------------------------------------------------------------------------------------------------
+Search in Big Files Via MappedByteBuffer
+    https://dzone.com/articles/search-in-big-files-via-mappedbytebuffer
+-----------------------------------------------------------------------------------------------------------------------
+Anghel Leonard
+    https://dzone.com/users/196910/anghelleonard.html
+-----------------------------------------------------------------------------------------------------------------------

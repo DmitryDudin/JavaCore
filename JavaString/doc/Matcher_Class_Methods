@@ -1,0 +1,40 @@
+------------------------------------------------------------------------------------------------------------------------
+Index Methods:
+    Index methods provide useful index values that show precisely where the match was found in the input String .
+------------------------------------------------------------------------------------------------------------------------
+Study Methods:
+    Study methods go through the input String and return a boolean indicating whether or not the pattern is found.
+    Commonly used are matches and lookingAt methods.
+
+    The matches and lookingAt methods both attempt to match an input sequence against a pattern.
+    The difference, is that matches requires the entire input sequence to be matched, while lookingAt does not.
+
+    Both methods start at the beginning of the input String.
+
+---
+- What's the difference between Matcher.lookingAt() and find()?
+    The matches method attempts to match the entire input sequence against the pattern.
+    The lookingAt method attempts to match the input sequence, starting at the beginning, against the pattern.
+    The find method scans the input sequence looking for the next subsequence that matches the pattern.
+
+    lookingAt always starts at the beginning, but find will scan for a starting position.
+
+    Viewed another way,
+        matches has a fixed start and end,
+        lookingAt has a fixed start but a variable end,
+        find has a variable start and end.
+
+    lookingAt() always starts checking from the beginning, and returns true when it comes across a match.
+
+    find() can find multiple matches, because it stores its current position, much like an iterator.
+---
+------------------------------------------------------------------------------------------------------------------------
+Replacement Methods:
+    Replacement methods are useful to replace text in an input string.
+    The common ones are replaceFirst and replaceAll.
+
+    The replaceFirst and replaceAll methods replace the text that matches a given regular expression.
+    As their names indicate, replaceFirst replaces the first occurrence, and replaceAll replaces all occurrences:
+
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

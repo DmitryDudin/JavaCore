@@ -1,0 +1,39 @@
+------------------------------------------------------------------------------------------------------------------------
+Previously, we have only created Pattern objects in a basic way.
+However, this class has another variant of the compile method that accepts a set of flags
+alongside the regex argument affecting the way the pattern is matched.
+These flags are simply abstracted integer values.
+
+    pattern = Pattern.compile(regex, flags);
+
+
+------------------------------------------------------------------------------------------------------------------------
+- Pattern.CANON_EQ
+    This flag enables canonical equivalence. When specified, two characters will be considered to match if,
+    and only if, their full canonical decompositions match.
+
+- Pattern.CASE_INSENSITIVE
+    This flag enables matching regardless of case. By default matching takes case into account.
+
+- Pattern.COMMENTS
+    The Java API allows one to include comments using # in the regex.
+    This can help in documenting complex regex that may not be immediately obvious to another programmer.
+    The comments flag makes the matcher ignore any white space or comments in the regex and only consider the pattern.
+
+- Pattern.DOTALL
+    By default, when we use the dot “.” expression in regex,
+    we are matching every character in the input String until we encounter a new line character.
+    Using this flag, the match will include the line terminator as well.
+
+- Pattern.LITERAL
+    When in this mode, matcher gives no special meaning to any metacharacters, escape characters or regex syntax.
+    There is no embedded flag character for enabling literal parsing.
+
+- Pattern.MULTILINE
+    By default ^ and $ metacharacters match absolutely at the beginning
+    and at the end respectively of the entire input String.
+    The matcher disregards any line terminators:
+-
+-
+------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------

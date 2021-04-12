@@ -1,0 +1,37 @@
+------------------------------------------------------------------------------------------------------------------------
+javaDoc
+    https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html
+------------------------------------------------------------------------------------------------------------------------
+For advanced regular expressions the java.util.regex.Pattern and java.util.regex.Matcher classes are used.
+------------------------------------------------------------------------------------------------------------------------
+If a pattern is to be used multiple times, compiling it once and reusing it will be more efficient
+than invoking this method each time.
+
+You first create a Pattern object which defines the regular expression.
+This Pattern object allows you to create a Matcher object for a given string.
+This Matcher object then allows you to do regex operations on a String.
+------------------------------------------------------------------------------------------------------------------------
+Pattern Class - Defines a pattern (to be used in a search)
+    The Pattern class provides no public constructors.
+    To create a pattern, we must first invoke one of its public static compile methods,
+    which will then return a Pattern object. These methods accept a regular expression as the first argument.
+---
+Matcher Class - Used to search for the pattern
+    Matcher object interprets the pattern and performs match operations against an input String.
+    It also defines no public constructors. We obtain a Matcher object by invoking the matcher method on a Pattern object.
+------------------------------------------------------------------------------------------------------------------------
+common flow:
+
+       //First, the pattern is created using the Pattern.compile() method.
+        Pattern pattern = Pattern.compile("pattern", Pattern.CASE_INSENSITIVE);
+
+        //The matcher() method is used to search for the pattern in a string. It returns a Matcher object which contains information about the search that was performed.
+        Matcher matcher = pattern.matcher("Visit W3Schools!");
+
+        //The find() method returns true if the pattern was found in the string and false if it was not found.
+        boolean matchFound = matcher.find();
+------------------------------------------------------------------------------------------------------------------------
+Pattern.CASE_INSENSITIVE - The case of letters will be ignored when performing a search.
+Pattern.LITERAL - Special characters in the pattern will not have any special meaning and will be treated as ordinary characters when performing a search.
+Pattern.UNICODE_CASE - Use it together with the CASE_INSENSITIVE flag to also ignore the case of letters outside of the English alphabet
+------------------------------------------------------------------------------------------------------------------------
