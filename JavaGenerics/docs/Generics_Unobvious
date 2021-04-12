@@ -1,5 +1,8 @@
 
 ------------------------------------------------------------------------------------------------------------------------
+Why does this generic code compile in java 8?
+    https://stackoverflow.com/questions/38092697/why-does-this-generic-code-compile-in-java-8/38092952#38092952
+------------------------------------------------------------------------------------------------------------------------
 why? :
 
         Class<Integer> intClazz = Integer.class;

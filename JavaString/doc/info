@@ -24,7 +24,22 @@ A Guide To Java Regular Expressions API
 How to Use Regular Expressions to Replace Tokens in Strings in Java
     https://www.baeldung.com/java-regex-token-replacement
 
+Regex Named Groups in Java
+    https://stackoverflow.com/questions/415580/regex-named-groups-in-java
 
+Regular Expression Reference: Named Groups and Backreferences
+    https://www.regular-expressions.info/refext.html
+Regular Expressions Tutorial
+    https://www.regular-expressions.info/tutorial.html
+
+Questions and Exercises: Regular Expressions
+    https://docs.oracle.com/javase/tutorial/essential/regex/QandE/questions.html
+
+Lesson: Generics (Updated)
+    https://docs.oracle.com/javase/tutorial/java/generics/index.html
+
+Non-capturing groups
+    https://www.javamex.com/tutorials/regular_expressions/non_capturing_groups.shtml
 ------------------------------------------------------------------------------------------------------------------------
 usefull hack  -  test regular expression with intellij idea be Ctrl+R  (!!!!!!!!!!!!!!)
 

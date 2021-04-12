@@ -68,4 +68,21 @@ to an instantiation using the capture is known as capture conversion .
 ------------------------------------------------------------------------------------------------------------------------
 компилятор подменяет wildcard  на capture wildcard (!!!!!!!!!!!!!!!!!!)
 ------------------------------------------------------------------------------------------------------------------------
+The method takes an argument of type List<?> , which the compiler translates to type List<capture of ?> .
+
+        private static void method( List<?> list) {}
+
+---
+
+---
+------------------------------------------------------------------------------------------------------------------------
+In some cases, the compiler infers the type of a wildcard. For example, a list may be defined as List<?> but,
+when evaluating an expression, the compiler infers a particular type from the code.
+This scenario is known as wildcard capture.
+---
+For the most part, you don't need to worry about wildcard capture,
+except when you see an error message that contains the phrase "capture of".
+---
+Generics were added to the Java language for this reason — to enforce type safety at compile time.
+---
 ------------------------------------------------------------------------------------------------------------------------

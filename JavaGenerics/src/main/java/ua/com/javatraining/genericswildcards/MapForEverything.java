@@ -18,7 +18,8 @@ public class MapForEverything {
 //        Map<? extends Object, ? super Object> mapForEverything = new HashMap<>();
 //        Map<? super Object, ? extends Object> mapForEverything = new HashMap<>();
 //        Map<? super Object, ? super Object> mapForEverything = new HashMap<>();
-        Map<Object,Object> mapForEverything = new HashMap<>();
+        Map<Object, Object> mapForEverything = new HashMap<>();
+//        Map<?, ?> mapForEverything = new HashMap<>();
 
         mapForEverything.put(String.valueOf("asf"), "String");
         mapForEverything.put(Integer.valueOf(1), "Integer");

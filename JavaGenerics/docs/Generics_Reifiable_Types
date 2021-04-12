@@ -1,4 +1,7 @@
 ------------------------------------------------------------------------------------------------------------------------
+Java Generics – <?> vs <? extends Object>
+    https://www.baeldung.com/java-generics-vs-extends-object
+------------------------------------------------------------------------------------------------------------------------
 Reifiable(надежный, достоверный, безотказный) типы:
 
 В Java мы говорим, что тип является reifiable, если информация о нем полностью доступна во время выполнения программы.
@@ -39,4 +42,29 @@ Reifiable(надежный, достоверный, безотказный) ти
 Поэтому Throwable и его подтипы не могут быть параметризованы.
 
 ------------------------------------------------------------------------------------------------------------------------
+Technically speaking, the generic types are not reified in Java.
+In programming language's terminology, when a type is present at runtime, we say that type is reified.
+
+The reified types in Java are as follows:
+
+    - Simple primitive types such as long
+    - Non-generic abstractions such as String or Runnable
+    - Raw types such as List or HashMap
+    - Generic types in which all types are unbounded wildcards such as List<?> or HashMap<?, ?>
+    - Arrays of other reified types such as String[], int[], List[], or Map<?, ?>[]
+------------------------------------------------------------------------------------------------------------------------
+Reifiable types are those whose type is not erased at compile time.
+In other words, a non-reifiable type's runtime representation will have less information
+than its compile-time counterpart, because some of it'll get erased.
+
+As a general rule, parameterized types are not reifiable.
+This means List<String> and Map<Integer, String> are not reifiable.
+The compiler erases their type and treats them as a List and Map respectively.
+
+The only exception to this rule is unbounded wildcard types. This means List<?> and Map<?,?> are reifiable. (!!!!!!!!!!!)
+
+On the other hand, List<? extends Object> is not reifiable. While subtle, this is a notable difference.
+Non-reifiable types cannot be used in certain situations such as in an instanceof operator or as elements of an array.
+
+
 ------------------------------------------------------------------------------------------------------------------------
