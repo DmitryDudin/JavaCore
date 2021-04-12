@@ -1,0 +1,14 @@
+------------------------------------------------------------------------------------------------------------------------
+Does a Method’s Signature Include the Return Type in Java?
+    https://www.baeldung.com/java-method-signature-return-type
+------------------------------------------------------------------------------------------------------------------------
+
+In this tutorial, we learned that the method signatures are comprised of the name
+and the parameter types' list.
+The modifiers, return type, parameter names, and exception list cannot differentiate
+between overloaded methods and, thus, are not part of the signature.
+
+We've also looked at how type erasure and varargs hide the effective method signature
+and how we can override Java's static method binding.
+
+------------------------------------------------------------------------------------------------------------------------

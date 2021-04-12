@@ -1,3 +1,5 @@
+package ua.com.javatraining;
+
 import java.util.concurrent.ForkJoinPool;
 
 public abstract class KeyWordAbstract {

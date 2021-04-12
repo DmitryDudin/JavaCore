@@ -31,6 +31,16 @@ public class IfElseOnOptional {
         // .orElse();
     }
 
+    @Test
+    public void ifPresent() {
+        Optional
+//                .ofNullable(null).
+                .ofNullable("obj").
+                ifPresent(v -> {
+            System.out.println(v);
+        });
+    }
+
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor

@@ -38,7 +38,7 @@ public class OuterClassInnerClass {
             nonStaticMeth();//к какому из обратимся?
             OuterClassInnerClass.this.nonStaticMeth();//а так?
             DataInput dataInputStream = new DataInputStream(new ByteArrayInputStream(new byte[]{1}));
-            dataInputStream.
+//            dataInputStream.
         }
 
     }

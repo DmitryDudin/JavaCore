@@ -4,4 +4,9 @@ https://github.com/xpinjection/java8-misuses﻿
 Optional:
     - нормально применяется как результат какого-либо метода
     - плохо изпользовать в конструкторе
-    -
+    - лучше не изпользовать Optional<Collection<String>>
+      если элементов в коллекции нет, то лучше передать пустую коллекцию а не null, и не Optional.empty()
+    - Optional containers should be short lived
+    - write nullable values in Optional to operate on them
+    - use chained methods
+    - carefully choose what to wrap
