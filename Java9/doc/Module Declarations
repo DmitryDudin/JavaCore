@@ -1,0 +1,156 @@
+-----------------------------------------------------------------------------------------------------------------------
+Module Declarations
+
+To set up a module, we need to put a special file at the root of our packages named module-info.java.
+This file is known as the module descriptor and contains all of the data needed to build and use our new module.
+We construct the module with a declaration whose body is either empty or made up of module directives:
+
+        module myModuleName {
+            // all directives are optional
+
+            requires module.name;
+            requires static module.name;
+            requires transitive module.name;
+
+            exports com.my.package.name;
+            export com.my.package.name to com.specific.package;
+
+            uses class.name;
+            provides MyInterface with MyInterfaceImpl;
+
+            opens com.my.package;
+            opens com.my.package to moduleOne, moduleTwo, etc.;
+
+
+
+        }
+
+
+---
+Requires
+    This module directive allows us to declare module dependencies
+    Now, my.module has both a runtime and a compile-time dependency on module.name.
+    And all public types exported from a dependency are accessible by our module when we use this directive.
+
+requires указывает модули, от которых зависит текущий модуль;
+
+---
+Requires Static
+    Sometimes we write code that references another module, but that users of our library will never want to use.
+    By using the requires static directive, we create a compile-time-only dependency
+
+requires static позволяет указать compile-time зависимости;
+---
+Requires Transitive
+    We commonly work with libraries to make our lives easier.
+    But, we need to make sure that any module that brings in our code will also bring in these extra ‘transitive'
+    dependencies or they won't work.
+    Luckily, we can use the requires transitive directive to force any downstream consumers also to read our
+    required dependencies:
+
+requires transitive — транзитивная зависимость — означает следующее: если модуль m1 транзитивно зависит от модуля m2,
+и мы имеем какой-то третий модуль mX, который зависит от m1 — модуль mX будет иметь доступ также и к m2;
+
+---
+Exports
+    By default, a module doesn't expose any of its API to other modules.
+    This strong encapsulation was one of the key motivators for creating the module system in the first place.
+    Our code is significantly more secure, but now we need to explicitly open our API up to the world
+    if we want it to be usable.
+    We use the exports directive to expose all public members of the named package:
+            module my.module {
+                exports com.my.package.name;
+            }
+
+    Now, when someone does requires my.module,
+    they will have access to the public types in our com.my.package.name package, but not any other package.
+
+exports указывает пакеты, которые экспортирует текущий модуль (не включая “подпакеты”);
+
+---
+Exports … To
+    We can use exports…to to open up our public classes to the world.
+    But, what if we don't want the entire world to access our API?
+    We can restrict which modules have access to our APIs using the exports…to directive.
+            module my.module {
+                export com.my.package.name to com.specific.package;
+            }
+
+exports...to… позволяет ограничить доступ: export com.my.package.name to com.specific.package;
+то есть можно открыть доступ к пакету нашего модуля только для какого-то другого(их) пакета(ов) другого модуля;
+
+---
+Uses
+    A service is an implementation of a specific interface or abstract class that can be consumed by other classes.
+    We designate the services our module consumes with the uses directive.
+    Note that the class name we use is either the interface or abstract class of the service, not the implementation class:
+            module my.module {
+                uses class.name;
+            }
+
+    We should note here that there's a difference between a requires directive and the uses directive.
+    We might require a module that provides a service we want to consume, but that service implements an interface
+    from one of its transitive dependencies.
+    Instead of forcing our module to require all transitive dependencies just in case,
+    we use the uses directive to add the required interface to the module path.
+
+uses указывает, какие сервисы использует модуль:    uses java.sql.Driver;
+В данном случае, мы указываем интерфейс используемого сервиса;
+
+---
+Provides … With
+    A module can also be a service provider that other modules can consume.
+    The first part of the directive is the provides keyword. Here is where we put the interface or abstract class name.
+    Next, we have the with directive where we provide the implementation class name that either
+    implements the interface or extends the abstract class.
+    Here's what it looks like put together:
+            module my.module {
+                provides MyInterface with MyInterfaceImpl;
+            }
+
+provides указывает, какие сервисы предоставляет модуль:
+        provides javax.tools.Tool with
+            jdk.javadoc.internal.api.JavadocTool;
+
+Сначала указываем интерфейс — javax.tools.Tool, после with — реализацию.
+
+---
+Open
+    Before Java 9, it was possible to use reflection to examine every type and member in a package, even the private ones.
+    Nothing was truly encapsulated, which can open up all kinds of problems for developers of the libraries.
+    Because Java 9 enforces strong encapsulation, we now have to explicitly grant permission for other modules
+    to reflect on our classes.
+    If we want to continue to allow full reflection as older versions of Java did, we can simply open the entire module up
+            open module my.module {
+            }
+
+Мы можем полностью открыть модуль для reflection доступа, объявив open.
+
+---
+Opens
+    If we need to allow reflection of private types, but we don't want all of our code exposed,
+    we can use the opens directive to expose specific packages.
+    But remember, this will open the package up to the entire world, so make sure that is what you want:
+            module my.module {
+              opens com.my.package;
+            }
+
+Либо, мы можем указать какие либо пакеты для reflection доступа, объявив opens.
+
+---
+Opens … To
+    Okay, so reflection is great sometimes, but we still want as much security as we can get from encapsulation.
+    We can selectively open our packages to a pre-approved list of modules, in this case, using the opens…to directive:
+
+            module my.module {
+                opens com.my.package to moduleOne, moduleTwo, etc.;
+            }
+
+Здесь же есть возможность использовать opens com.my.coolpackage to…, таким образом предоставляя reflection
+доступ пакету com.my.coolpackage из пакета, который укажем после to.
+
+---
+---
+---
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------

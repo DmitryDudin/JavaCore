@@ -1,0 +1,26 @@
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+If you're ready to modularize your code, but are worried about the dependencies,
+and whether they'll modularize their code in time, worry a bit less.
+Of course a modular jar won't see the classes on the classpath and in the non-modular jars by default.
+So one needs a minimally intrusive way to make a jar pretend it’s modular, without complex code changes
+that'll break everything. Such a way, luckily, exists.
+-----------------------------------------------------------------------------------------------------------------------
+
+You can specify some attributes in the MANIFEST.MF file of the jar.
+
+         Attribute                                  Action
+
+Automatic-Module-Name: module.name         Declares stable module name for non-modularized jar.
+Add-Exports: module/package                Exports the package to all unnamed modules.
+Add-Opens: module/package                  Opens the package to all unnamed modules.
+
+With these options you can control what a normal, non-modular jar file looks like in the module system,
+which provides you with an easier path for migrating an existing non-modular application.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------

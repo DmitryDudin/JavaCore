@@ -1,0 +1,222 @@
+-----------------------------------------------------------------------------------------------------------------------
+A Guide to Java 9 Modularity
+    https://www.baeldung.com/java-9-modularity
+
+Модульность в Java 9
+    https://habr.com/ru/post/499872/
+
+Java 9 Modules Cheat Sheet
+    https://www.jrebel.com/blog/java-9-modules-cheat-sheet
+
+Java 9 Modules
+    https://www.journaldev.com/13106/java-9-modules
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Какие цели ставили перед собой разработчики:
+    - облегчить разработку больших приложений и библиотек;
+    - улучшить безопасность Java SE в целом, и JDK в частности;
+    - увеличить производительность приложений;
+    - создать возможность уменьшения размера JRE для запуска на небольших девайсах, чтобы не потреблять слишком много памяти;
+    - JAR HELL (об этом чуть позже).
+
+The main goal of Java 9 Module System is to support Modular Programming in Java.
+-----------------------------------------------------------------------------------------------------------------------
+
+What's a Module?
+
+A Module is a group of closely related packages and resources along with a new module descriptor file.
+In other words, it's a “package of Java Packages” abstraction that allows us to make our code even more reusable.
+
+Модуль — это новый уровень агрегации пакетов и ресурсов (ориг. “a uniquely named, reusable group of related packages,
+as well as resources and a module descriptor”).
+
+Модули поставляются в JAR файлах с пакетами и дескриптором модуля module-info.java.
+Файл module-info.java содержит описание модуля: имя, зависимости, экспортируемые пакеты, потребляемые и
+предоставляемые сервисы, разрешения для reflection доступа.
+
+A Java module is either a JAR file containing a module descriptor, or an exploded version of the module descriptor
+
+A Module is a self-describing collection of Code, Data, and some Resources. It is a set of related Packages,
+Types (classes, abstract classes, interfaces etc) with Code & Data and Resources.
+
+Each Module contains only a set of related code and data to support Single Responsibility (Functionality) Principle (SRP).
+
+-----------------------------------------------------------------------------------------------------------------------
+Resources
+
+Each module is responsible for its resources, like media or configuration files.
+
+Previously we'd put all resources into the root level of our project and
+manually manage which resources belonged to different parts of the application.
+
+With modules, we can ship required images and XML files with the module that needs it,
+making our projects much easier to manage.
+
+-----------------------------------------------------------------------------------------------------------------------
+Module Descriptor
+
+When we create a module, we include a descriptor file that defines several aspects of our new module:
+
+Name – the name of our module
+Dependencies – a list of other modules that this module depends on
+Public Packages – a list of all packages we want accessible from outside the module
+Services Offered – we can provide service implementations that can be consumed by other modules
+Services Consumed – allows the current module to be a consumer of a service
+Reflection Permissions – explicitly allows other classes to use reflection to access the private members of a package
+
+We need to list all packages we want to be public because by default all packages are module private.
+The same is true for reflection. By default, we cannot use reflection on classes we import from another module.
+
+A module descriptor is a file that its access rules as it’s dependencies.
+
+-----------------------------------------------------------------------------------------------------------------------
+Module Types
+
+1. System Modules – These are the modules listed when we run the list-modules command above.
+   They include the Java SE and JDK modules.
+
+   Java SE и JDK модули. Полный список можно посмотреть, используя команду java --list-modules.
+
+   Java SE and JDK modules are the modules provided by the JDK: java.base, java.xml, etc.
+   They export all the packages you could access previously, like java.util.
+
+2. Application Modules – These modules are what we usually want to build when we decide to use Modules.
+   They are named and defined in the compiled module-info.class file included in the assembled JAR.
+
+   Модули нашего приложения, которые мы написали, а также те зависимости (от сторонних библиотек),
+   которые использует наше приложение.
+
+   Named application modules are your application modules that contain the module-info.class file;
+   they have to explicitly state which modules they depend on, including what packages and services they need.
+   They cannot read the unnamed module.
+
+3. Automatic Modules – We can include unofficial modules by adding existing JAR files to the module path.
+   The name of the module will be derived from the name of the JAR.
+   Automatic modules will have full read access to every other module loaded by the path.
+
+   Это модули с открытым доступом, создаваемые Java автоматически из JAR-файлов.
+   Допустим, мы хотим запустить наше приложение в модульном режиме, но оно использует какую-то библиотеку.
+   В этом случае мы помещаем JAR-файл на --module-path и Java автоматически создает модуль с именем,
+   унаследованным от имени JAR-файла.
+
+   Automatic modules are jar files on the module-path without the module-info.class file.
+   The module name is derived from the Automatic-Module-Name MANIFEST.MF entry or the filename of the jar;
+   they can read all modules, including the unnamed module, and are a good way to start the migration to modularity.
+
+4. Unnamed Module – When a class or JAR is loaded onto the classpath, but not the module path,
+   it's automatically added to the unnamed module.
+   It's a catch-all module to maintain backward compatibility with previously-written Java code.
+
+   Безымянный модуль, автоматически создаваемый из всех JAR-файлов, которые загружены на --class-path.
+   Это универсальный модуль для обеспечения обратной совместимости с ранее написанным Java кодом.
+
+   Unnamed module contains all the jars and classes on the classpath; can read all modules.
+
+-----------------------------------------------------------------------------------------------------------------------
+module-info.java Contents
+
+To declare a jar file as a named Java module, one needs to provide a module-info.class file, which is, naturally,
+compiled from a module-info.java file. It declares the dependencies within the module system and allows the compiler
+and the runtime to police the boundaries/access violations between the modules in your application.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Distribution
+
+Modules can be distributed one of two ways: as a JAR file or as an “exploded” compiled project.
+This, of course, is the same as any other Java project so it should come as no surprise.
+
+We have to be careful though because we can only have one module per JAR file.
+When we set up our build file, we need to make sure to bundle each module in our project as a separate jar.
+-----------------------------------------------------------------------------------------------------------------------
+Default Modules
+
+When we install Java 9, we can see that the JDK now has a new structure.
+They have taken all the original packages and moved them into the new module system.
+We can see what these modules are by typing into the command line:
+
+        java --list-modules
+
+Anything needed by the JDK itself is kept in the jdk modules.
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Visibility
+
+A lot of libraries depend on reflection to work their magic (JUnit and Spring come to mind).
+By default in Java 9, we will only have access to public classes, methods, and fields in our exported packages.
+Even if we use reflection to get access to non-public members and call setAccessible(true), we won't be able
+to access these members.
+
+We can use the open, opens, and opens…to options to grant runtime-only access for reflection. Note, this is runtime-only!
+
+If we must have access to a module for reflection, and we're not the owner
+of that module (i.e., we can't use the opens…to directive), then it's possible to use the command line –add-opens option
+to allow own modules reflection access to the locked down module at runtime.
+
+The only caveat here's that you need to have access to the command line arguments that are used to run a module for this to work.
+
+-----------------------------------------------------------------------------------------------------------------------
+С помощью JLINK можно создавать кастомные наборы JRE, которые будут включают только «нужные» модули,
+которые реально необходимы вашему приложению.
+
+-----------------------------------------------------------------------------------------------------------------------
+Зачем в принципе были введены сервисы? Они нужны для того, чтобы показать, как наш код будет использован.
+То есть, здесь заключена семантическая роль. Также, модульность — это про инкапсуляцию и безопасность, так как мы можем сделать реализацию private и исключить возможность несанкционированного доступа через reflection.
+
+Также, один из вариантов использования сервисов — это достаточно простая реализация плагинов.
+Мы можем реализовать интерфейс плагина для нашего приложения и подключать модули для работы с ними.
+
+-----------------------------------------------------------------------------------------------------------------------
+Class-path vs module-path
+
+С появлением модулей появилось новое понятие — module-path. По сути, это тот же class-path, но для модулей.
+В обычном режиме запуска мы указываем опции и полный путь к мейн классу. В случае, если мы хотим работать с модулями,
+мы также указываем опции и параметр -m либо -module, который как раз указывает на то, что мы будем запускать модули.
+То есть, мы автоматически переводим наше приложение в модульный режим. Далее мы указываем имя модуля и путь к
+мейн классу из модуля.
+
+Также, если в обычном режиме мы привыкли работать с параметром -cp и --class-path, в режиме модульности мы прописываем
+новый параметр -p и --module-path, который указывает пути к используемым в приложении модулям.
+
+Часто встречаюсь с тем, что разработчики не переходят на версии 9+, так как считают, что им придется работать с модулями.
+Хотя на самом деле, мы можем запускать наши приложения в старом режиме, попросту не прописывая параметр и
+не используя модули, а используя только другие новые фишки.
+-----------------------------------------------------------------------------------------------------------------------
+JAR HELL
+
+Что такое Jar Hell в двух словах? Например, у нас есть какое-то наше приложение и оно зависит от библиотеки X и
+библиотеки Y. При этом, обе эти библиотеки зависят от библиотеки Z, но от разных версий: X зависит от версии 1,
+Y — от версии 2. Хорошо, если версия 2 обратно совместима с версией 1, тогда никаких проблем не возникнет.
+А если нет — очевидно, что мы получаем конфликт версий, то есть одна и та же библиотека не может быть загружена
+в память одним и тем же загрузчиком классов.
+
+Как в этом случае выходят из ситуации? Есть стандартные методы, которые разработчики используют со времен
+самой первой Java, например, exclude, кто-то использует плагины для Maven, которые переименовывают названия
+корневых пакетов библиотеки. Либо же, разработчики ищут разные версии библиотеки X, чтобы подобрать совместимый вариант.
+
+К чему это я: первые прототипы Jigsaw подразумевали наличие версии у модуля и позволяли загрузку нескольких версий
+через разные ClassLoader’ы, но позже от это отказались. В итоге, “серебряной пули”, которую многие ждали, не вышло.
+
+
+Также, помимо самих модулей, есть еще механизм слоев или Jigsaw Layers, который также помогает справится с проблемой Jar Hell.
+
+-----------------------------------------------------------------------------------------------------------------------
+Each Java 9 Module have one and only one Module and one Module Descriptor. 
+Unlike Java 8 Packages, We cannot create multiple modules into a single Module.
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+

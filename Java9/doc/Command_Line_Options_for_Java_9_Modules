@@ -1,0 +1,28 @@
+-----------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+How to use the module system from the command line
+
+1. module-path – We use the –module-path option to specify the module path. This is a list of one or more directories
+   that contain your modules.
+
+2. add-reads – Instead of relying on the module declaration file, we can use the command line equivalent
+   of the requires directive; –add-reads.
+
+3. add-exports – Command line replacement for the exports directive.
+
+4. add-opens – Replace the open clause in the module declaration file.
+
+5. add-modules – Adds the list of modules into the default set of modules
+
+6. list-modules – Prints a list of all modules and their version strings
+
+7. patch-module – Add or override classes in a modules
+
+8. illegal-access=permit|warn|deny – Either relax strong encapsulation by showing a single global warning,
+   shows every warning, or fails with errors. The default is permit.
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,7 @@
+Java 9 Module System has a “java.base” Module. It’s known as Base Module.
+It’s an Independent module and does NOT dependent on any other modules.
+By default, all other Modules dependent on this module.
+
+That’s why “java.base” Module is also known as The Mother of Java 9 Modules.
+
+It’s default module for all JDK Modules and User-Defined Modules.
