@@ -1,0 +1,7 @@
+
+
+Lambdas:
+    - antipattern when big code write in lambdas - лучше вынести код в какойто метод
+    - antipattern complex lambda  - необх. выносить сложную логику в отдельный метод
+    - antipattern long lambda
+    - prefer reusable method references

@@ -1,0 +1,7 @@
+-----------------------------------------------------------------------------------------------------------------------
+
+The Java access modifiers private and protected cannot be assigned to a class.
+Only to constructors, methods and fields inside classes.
+Classes can only have the default (package) and public access modifier assigned to them.
+
+-----------------------------------------------------------------------------------------------------------------------
